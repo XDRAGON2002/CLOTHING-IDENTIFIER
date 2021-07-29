@@ -50,8 +50,18 @@ cnn_loss,cnn_acc = cnn_model.evaluate(test_image,test_label)
 print(f"CNN ACCURACY - {cnn_acc}")
 cnn_pred = cnn_model.predict(test_image)
 
-for i in range(5) :
-    find = random.randint(0,len(test_image) - 1)
-    plt.imshow(test_image[find],cmap = plt.cm.binary)
-    plt.title(f"ACTUAL - {names[test_label[find]]}\nKNN - {names[knn_pred[find]]} | CNN - {names[np.argmax(cnn_pred[find])]}")
-    plt.show()
+find = random.randint(0,len(test_image) - 1)
+find_item = names[test_label[find]]
+plt.imshow(test_image[find],cmap = plt.cm.binary)
+plt.title(f"INPUT IMAGE - {names[test_label[find]]}")
+plt.show()
+
+show = 0
+for i in range(len(test_image)) :
+    if find_item == names[knn_pred[i]] and find_item == names[np.argmax(cnn_pred[i])] :
+        plt.imshow(test_image[i],cmap = plt.cm.binary)
+        plt.title(f"INPUT - {names[test_label[find]]} | ACTUAL - {names[test_label[i]]}\nKNN - {names[knn_pred[i]]} | CNN - {names[np.argmax(cnn_pred[i])]}")
+        plt.show()
+        show += 1
+    if show == 5 :
+        break
